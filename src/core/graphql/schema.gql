@@ -1,0 +1,35 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  username: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  create_user(data: CreateUserInput!): Boolean!
+}
+
+type Query {
+  find_all_users: [UserModel!]!
+}
+
+"""User module"""
+type UserModel {
+  avatar: String
+  bio: String
+  created_at: DateTime!
+  displayName: String!
+  email: String!
+  id: ID!
+  password: String!
+  updated_at: DateTime!
+  username: String!
+}
