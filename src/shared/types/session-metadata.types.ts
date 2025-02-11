@@ -3,8 +3,8 @@
 export interface LocationInfo {
     country: string
     city: string
-    latitude: string
-    longitude: string
+    latitude: number
+    longitude: number
 }
 
 export interface DeviceInfo {

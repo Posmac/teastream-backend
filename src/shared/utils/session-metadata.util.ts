@@ -7,6 +7,7 @@ import type { SessionMetadata } from '../types/session-metadata.types'
 import { IS_DEV_ENV } from './is-dev.util'
 
 import DeviceDetector = require('device-detector-js')
+import { SessionMetadataModel } from 'src/modules/auth/session/models/session-model'
 
 countries.registerLocale(require('i18n-iso-countries/langs/en.json'))
 
@@ -25,7 +26,7 @@ export function getSessionMetadata(
 
 	const location = lookup(ip)
 	const device = new DeviceDetector().parse(userAgent)
-
+    
 	return {
 		location: {
 			country: countries.getName(location.country, 'en') || 'Not known',
