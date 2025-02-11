@@ -4,6 +4,7 @@ import { LoginInput } from './inputs/login.input';
 import { verify } from 'argon2';
 import { Request } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { getSessionMetadata } from 'src/shared/utils/session-metadata.util';
 
 @Injectable()
 export class SessionService {
@@ -13,7 +14,7 @@ export class SessionService {
 
     }
 
-    public async login(req: Request, input: LoginInput) {
+    public async login(req: Request, input: LoginInput, userAgent: string) {
         
         const {login, password} = input;
 
@@ -36,9 +37,13 @@ export class SessionService {
             throw new UnauthorizedException("Wrong password")
         }
 
+        const metaData = getSessionMetadata(req, userAgent)
+
+
         return new Promise((resolve, reject) => {
             req.session.createdAt = new Date()
             req.session.userId = user.id
+            req.session.metaData = metaData
 
             req.session.save(err => {
                 if (err) {
