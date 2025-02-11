@@ -6,6 +6,6 @@ declare module "express-session" {
     interface SessionData {
         userId?: string
         createdAt?: Date
-        metaData: SessionMetadata
+        metadata: SessionMetadata
     }
 }

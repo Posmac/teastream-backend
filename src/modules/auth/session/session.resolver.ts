@@ -48,4 +48,12 @@ export class SessionResolver {
 	) {
 		return this.sessionService.remove(req, id)
 	}
+
+	@Authorization()
+	@Mutation(() => Boolean, { name: 'removeAllSessions' })
+	public async removeAll(
+		@Context() { req }: GqlContext
+	) {
+		return this.sessionService.removeAll(req)
+	}
 }

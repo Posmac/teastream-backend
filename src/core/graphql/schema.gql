@@ -36,6 +36,7 @@ type Mutation {
   create_user(data: CreateUserInput!): Boolean!
   login(data: LoginInput!): UserModel!
   logout: Boolean!
+  removeAllSessions: Boolean!
   removeSession(id: String!): Boolean!
 }
 

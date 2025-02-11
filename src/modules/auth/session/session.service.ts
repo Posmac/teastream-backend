@@ -32,22 +32,22 @@ export class SessionService {
 
             if(sessionData) {
                 const session = JSON.parse(sessionData)
-                
-                console.log("Session Metadata:", session.metadata);
 
                 if(session.userId === userId) 
                 {
                     userSessions.push({
-                        ...session,
-                        id: key.split(':')[1]
+                        id: key.split(':')[1],
+                        ...session
                     })
                 }
             }
         }
 
         userSessions.sort((lha, rha) => rha.created_at - lha.created_at)
+        userSessions.filter(session => session.id !== req.sessionID)
+        console.log(userSessions)
 
-        return userSessions.filter(session => session.id !== req.sessionID)
+        return userSessions
     }
 
     public async findCurrent(req: Request) {
@@ -90,12 +90,10 @@ export class SessionService {
 
         const metaData = getSessionMetadata(req, userAgent)
 
-        console.log(metaData)
-
         return new Promise((resolve, reject) => {
             req.session.createdAt = new Date()
             req.session.userId = user.id
-            req.session.metaData = metaData
+            req.session.metadata = metaData
 
             req.session.save(err => {
                 if (err) {
@@ -139,4 +137,20 @@ export class SessionService {
 
 		return true
 	}
+
+    public async removeAll(req: Request) {
+        if (!req.session.id) {
+            throw new ConflictException('Сессия не существует');
+        }
+    
+        const sessionPrefix = this.configService.getOrThrow<string>('SESSION_FOLDER');
+    
+        const keys = await this.redisService.keys(`${sessionPrefix}*`);
+
+        for (const key of keys) {
+            await this.redisService.del(key);
+        }
+    
+        return true;
+    }
 }
