@@ -6,7 +6,7 @@ import { ValidationPipe } from '@nestjs/common';
 import * as session from "express-session"
 import { ms, type StringValue } from './shared/utils/ms-util';
 import { parseBoolean } from './shared/utils/parse-boolean.util';
-import { RedisStore } from 'connect-redis';
+import RedisStore from 'connect-redis';
 import { RedisService } from './core/redis/redis.service';
 
 async function bootstrap() {
