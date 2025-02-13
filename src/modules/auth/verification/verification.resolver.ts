@@ -3,8 +3,8 @@ import { VerificationService } from './verification.service';
 import { GqlContext } from 'src/shared/types/gql-context.types';
 import { VerificationInput } from './inputs/verification-input';
 import { UserAgent } from 'src/shared/decorators/user-agent.decorator';
-import { UserModel } from '../models/user.model';
-import { AuthModel } from '../models/auth.model';
+import { UserModel } from '../account/models/user.model';
+import { AuthModel } from '../account/models/auth.model';
 
 @Resolver('Verification')
 export class VerificationResolver { 

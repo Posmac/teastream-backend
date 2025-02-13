@@ -1,7 +1,7 @@
 import { Mutation, Resolver, Context, Args } from '@nestjs/graphql';
 import { DeactivateService } from './deactivate.service';
 import { Authorization } from 'src/shared/decorators/auth.decorator';
-import { AuthModel } from '../models/auth.model';
+import { AuthModel } from '../account/models/auth.model';
 import { GqlContext } from 'src/shared/types/gql-context.types';
 import { DeactivateAccountInput } from './inputs/deactivate-account.input';
 import { User } from 'prisma/generated';

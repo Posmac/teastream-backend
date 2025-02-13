@@ -1,12 +1,12 @@
 import { Context, Mutation, Resolver, Args, Query } from '@nestjs/graphql';
 import { SessionService } from './session.service';
-import { UserModel } from '../models/user.model';
+import { UserModel } from '../account/models/user.model';
 import { GqlContext } from 'src/shared/types/gql-context.types';
 import { LoginInput } from './inputs/login.input';
 import { UserAgent } from 'src/shared/decorators/user-agent.decorator';
 import { SessionModel } from './models/session-model';
 import { Authorization } from 'src/shared/decorators/auth.decorator';
-import { AuthModel } from '../models/auth.model';
+import { AuthModel } from '../account/models/auth.model';
 
 @Resolver('Session')
 export class SessionResolver {
