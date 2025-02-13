@@ -11,6 +11,8 @@ import { SessionModule } from 'src/modules/auth/session/session.module';
 import { VerificationModule } from 'src/modules/auth/verification/verification.module';
 import { MailModule } from 'src/modules/libs/mail/mail.module';
 import { PasswordRecoveryModule } from 'src/modules/auth/password-recovery/password-recovery.module';
+import { TotpModule } from 'src/modules/auth/totp/totp.module';
+import { DeactivateModule } from 'src/modules/auth/deactivate/deactivate.module';
 
 @Module({
   imports: [PrismaModule, 
@@ -29,7 +31,9 @@ import { PasswordRecoveryModule } from 'src/modules/auth/password-recovery/passw
     MailModule,
     SessionModule,
     VerificationModule,
-    PasswordRecoveryModule
+    PasswordRecoveryModule,
+    TotpModule,
+    DeactivateModule
   ]
 })
 export class CoreModule {}

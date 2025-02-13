@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AuthModel {
+  message: String
+  user: UserModel
+}
+
 input CreateUserInput {
   email: String!
   password: String!
@@ -13,10 +18,21 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input DeactivateAccountInput {
+  email: String!
+  password: String!
+  pin: String
+}
+
 type DeviceModel {
   browser: String!
   os: String!
   type: String!
+}
+
+input EnableTotpInput {
+  pin: String!
+  secret: String!
 }
 
 type LocationModel {
@@ -29,12 +45,16 @@ type LocationModel {
 input LoginInput {
   login: String!
   password: String!
+  pin: String
 }
 
 type Mutation {
   clearSessionCookie: Boolean!
   create_user(data: CreateUserInput!): Boolean!
-  login(data: LoginInput!): UserModel!
+  deactivateAccount(data: DeactivateAccountInput!): AuthModel!
+  disableTotp: Boolean!
+  enableTotp(data: EnableTotpInput!): Boolean!
+  login(data: LoginInput!): AuthModel!
   logout: Boolean!
   newPassword(data: NewPasswordInput!): Boolean!
   removeAllSessions: Boolean!
@@ -53,6 +73,7 @@ type Query {
   findCurrentSession: SessionModel!
   findProfile: UserModel!
   findSessionsByUser: [SessionModel!]!
+  generateTotpSecret: TotpModel!
 }
 
 input ResetPasswordInput {
@@ -72,17 +93,26 @@ type SessionModel {
   userId: String!
 }
 
+type TotpModel {
+  qrcodeUrl: String!
+  secret: String!
+}
+
 """User module"""
 type UserModel {
   avatar: String
   bio: String
   created_at: DateTime!
+  deactivatedAt: DateTime
   display_name: String!
   email: String!
   id: ID!
+  isDeactivated: Boolean!
   isEmailVerified: Boolean!
+  isTotpEnabled: Boolean!
   isVerified: Boolean!
   password: String!
+  totpSecret: String
   updated_at: DateTime!
   username: String!
 }
