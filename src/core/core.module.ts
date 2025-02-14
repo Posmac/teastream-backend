@@ -16,6 +16,7 @@ import { DeactivateModule } from 'src/modules/auth/deactivate/deactivate.module'
 import { CronModule } from 'src/modules/cron/cron.module';
 import { StorageModule } from 'src/modules/storage/storage.module';
 import { ProfileModule } from 'src/modules/auth/profile/profile.module';
+import { StreamModule } from 'src/modules/stream/stream.module';
 
 @Module({
   imports: [PrismaModule, 
@@ -39,7 +40,8 @@ import { ProfileModule } from 'src/modules/auth/profile/profile.module';
     VerificationModule,
     PasswordRecoveryModule,
     TotpModule,
-    DeactivateModule
+    DeactivateModule,
+    StreamModule
   ]
 })
 export class CoreModule {}

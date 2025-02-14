@@ -31,6 +31,7 @@ model User {
 
   tokens      Token[]
   socialLinks SocialLink[]
+  stream      Stream?
 
   created_at DateTime @default(now()) @map("created_ad")
   updated_at DateTime @updatedAt @map("updated_at")
@@ -68,6 +69,27 @@ model Token {
   updated_at DateTime @updatedAt @map("updated_at")
 
   @@map("tokens")
+}
+
+model Stream {
+  id String @id @default(uuid())
+
+  title        String
+  thumbnailUrl String?
+
+  ingressId String? @unique
+  serverUrl String?
+  streamKey String?
+
+  isLive Boolean @default(false)
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String? @unique @map("user_id")
+
+  created_at DateTime @default(now()) @map("created_ad")
+  updated_at DateTime @updatedAt @map("updated_at")
+
+  @@map("stream")
 }
 
 enum TokenType {
