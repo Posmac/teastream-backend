@@ -17,6 +17,10 @@ import { CronModule } from 'src/modules/cron/cron.module';
 import { StorageModule } from 'src/modules/storage/storage.module';
 import { ProfileModule } from 'src/modules/auth/profile/profile.module';
 import { StreamModule } from 'src/modules/stream/stream.module';
+import { LivekitModule } from 'src/modules/libs/livekit/livekit.module';
+import { getLiveKitConfig } from './config/livekit.config';
+import { IngressModule } from 'src/modules/stream/ingress/ingress.module';
+import { WebhookModule } from 'src/modules/webhook/webhook.module';
 
 @Module({
   imports: [PrismaModule, 
@@ -27,6 +31,11 @@ import { StreamModule } from 'src/modules/stream/stream.module';
     GraphQLModule.forRootAsync({
       driver: ApolloDriver,
       useFactory: getGraphQlConfig,
+      imports: [ConfigModule],
+      inject: [ConfigService]
+    }),
+    LivekitModule.registerAsync({
+      useFactory: getLiveKitConfig,
       imports: [ConfigModule],
       inject: [ConfigService]
     }),
@@ -41,7 +50,9 @@ import { StreamModule } from 'src/modules/stream/stream.module';
     PasswordRecoveryModule,
     TotpModule,
     DeactivateModule,
-    StreamModule
+    StreamModule,
+    IngressModule,
+    WebhookModule
   ]
 })
 export class CoreModule {}

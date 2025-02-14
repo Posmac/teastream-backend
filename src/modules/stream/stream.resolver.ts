@@ -9,6 +9,8 @@ import { ChangeStreamInfoInput } from './input/change-stream-info.input';
 import { FileValidationPipe } from 'src/shared/pipes/file-validation.pipe';
 import * as GraphQLUpload from 'graphql-upload/GraphQLUpload.js'
 import * as Upload from 'graphql-upload/Upload.js'
+import { GenerateStreamTokenModel } from './models/generate-model.token';
+import { GenerateStreamTokenInput } from './input/generate-stream-token.input';
 
 @Resolver('Stream')
 export class StreamResolver {
@@ -40,5 +42,10 @@ export class StreamResolver {
 	@Mutation(() => Boolean, { name: 'removeStreamThumbnail' })
 	public async removeThumbnail(@Authorized() user: User) {
 		return this.streamService.removeThumbnail(user)
+	}
+
+	@Mutation(() => GenerateStreamTokenModel, { name: 'generateStreamToken' })
+	public async generateToken(@Args('data') input: GenerateStreamTokenInput) {
+		return this.streamService.generateToken(input)
 	}
 }
