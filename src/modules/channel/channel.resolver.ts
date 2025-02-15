@@ -4,6 +4,7 @@ import { Authorization } from 'src/shared/decorators/auth.decorator';
 import { Authorized } from 'src/shared/decorators/authorized.decoratos';
 import { User } from 'prisma/generated';
 import { UserModel } from '../auth/account/models/user.model';
+import { SubscriptionModel } from '../sponsorship/subscription/models/subscriptions.model';
 
 @Resolver('Channel')
 export class ChannelResolver {
@@ -24,8 +25,8 @@ export class ChannelResolver {
 		return this.channelService.findFollowersCountByChannel(channelId)
 	}
 
-	// @Query(() => [SubscriptionModel], { name: 'findSponsorsByChannel' })
-	// public async findSponsorsByChannel(@Args('channelId') channelId: string) {
-	// 	return this.channelService.findSponsorsByChannel(channelId)
-	// }
+	@Query(() => [SubscriptionModel], { name: 'findSponsorsByChannel' })
+	public async findSponsorsByChannel(@Args('channelId') channelId: string) {
+		return this.channelService.findSponsorsByChannel(channelId)
+	}
 }

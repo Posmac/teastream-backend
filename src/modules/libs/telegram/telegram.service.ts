@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Action, Command, Ctx, Start, Update } from 'nestjs-telegraf';
-import { TokenType, User } from 'prisma/generated';
+import { SponsorshipPlan, TokenType, User } from 'prisma/generated';
 import { PrismaService } from 'src/core/prisma/prisma.service';
 import { Context, Telegraf } from 'telegraf';
 import { MESSAGES } from './telegram-messages';
@@ -129,17 +129,9 @@ export class TelegramService extends Telegraf {
 		await this.telegram.sendMessage(chatId, MESSAGES.newFollowing(follower, user.followings.length), { parse_mode: 'HTML' } )
 	}
 
-	// public async sendNewSponsorship(
-	// 	chatId: string,
-	// 	plan: SponsorshipPlan,
-	// 	sponsor: User
-	// ) {
-	// 	await this.telegram.sendMessage(
-	// 		chatId,
-	// 		MESSAGES.newSponsorship(plan, sponsor),
-	// 		{ parse_mode: 'HTML' }
-	// 	)
-	// }
+	public async sendNewSponsorship(chatId: string, plan: SponsorshipPlan, sponsor: User) {
+		await this.telegram.sendMessage(chatId, MESSAGES.newSponsorship(plan, sponsor), { parse_mode: 'HTML' } )
+	}
 
 	public async sendEnableTwoFactor(chatId: string) {
 		await this.telegram.sendMessage(chatId, MESSAGES.enableTwoFactor, {
