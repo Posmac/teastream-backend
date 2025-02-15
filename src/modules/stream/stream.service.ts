@@ -36,7 +36,8 @@ export class StreamService {
                 ...whereClause
             },
             include: {
-                user: true
+                user: true,
+				category: true
             },
             orderBy:  {
                 created_at: "desc"
@@ -56,7 +57,12 @@ export class StreamService {
 				userId: user.id
 			},
 			data: {
-				title
+				title,
+				category: {
+					connect: {
+						id: categoryId
+					}
+				}
 			}
 		})
 
@@ -162,7 +168,8 @@ export class StreamService {
 				}
 			},
 			include: {
-				user: true
+				user: true, 
+				category: true
 			},
 			take: total,
 			skip: 0
