@@ -1,11 +1,12 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { User } from 'prisma/generated';
 import { PrismaService } from 'src/core/prisma/prisma.service';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable()
 export class FollowService {
 
-    public constructor(private readonly prismaService: PrismaService) {}
+    public constructor(private readonly prismaService: PrismaService, private readonly notificationService: NotificationService) {}
 
 	public async findMyFollowers(user: User) {
 		const followers = await this.prismaService.follow.findMany({
@@ -70,22 +71,19 @@ export class FollowService {
 				followerId: user.id,
 				followingId: channel.id
 			},
-			// include: {
-			// 	follower: true,
-			// 	following: {
-			// 		include: {
-			// 			notificationSettings: true
-			// 		}
-			// 	}
-			// }
+			include: {
+				follower: true,
+				following: {
+					include: {
+						notificationSettings: true
+					}
+				}
+			}
 		})
 
-		// if (follow.following.notificationSettings.siteNotifications) {
-		// 	await this.notificationService.createNewFollowing(
-		// 		follow.following.id,
-		// 		follow.follower
-		// 	)
-		// }
+		if (follow.following.notificationSettings.siteNotifications) {
+			await this.notificationService.createNewFollowing(follow.following.id, follow.follower)
+		}
 
 		// if (
 		// 	follow.following.notificationSettings.telegramNotifications &&

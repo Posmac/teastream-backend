@@ -5,12 +5,13 @@ import { SocialLinkModel } from "../../profile/models/social-link.model";
 import { StreamModel } from "src/modules/stream/models/stream.model";
 import { Stream } from "stream";
 import { FollowModel } from "src/modules/follow/models/follow.model";
+import { NotificationSettingsModel } from "src/modules/notification/models/notification-settings.model";
+import { NotificationModel } from "src/modules/notification/models/notificaiton.model";
 
 @ObjectType({
     description: "User module"
 })
 export class UserModel implements User {
-    
     @Field(() => ID)
     id: string
 
@@ -31,6 +32,9 @@ export class UserModel implements User {
 
     @Field(() => String, {nullable: true})
     bio: string
+
+    @Field(() => String, {nullable: true})
+    telegramId: string;
 
     @Field(() => Boolean)
 	public isVerified: boolean
@@ -58,6 +62,12 @@ export class UserModel implements User {
 
     @Field(() => [FollowModel])
     public followings: FollowModel[]
+
+    @Field(() => [NotificationModel])
+    public notifications: NotificationModel[]
+
+    @Field(() => NotificationSettingsModel)
+    public notificationSettings: NotificationSettingsModel    
 
     @Field(() => StreamModel)
     public stream: StreamModel
