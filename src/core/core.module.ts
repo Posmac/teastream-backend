@@ -23,6 +23,8 @@ import { IngressModule } from 'src/modules/stream/ingress/ingress.module';
 import { WebhookModule } from 'src/modules/webhook/webhook.module';
 import { CategoriesModule } from 'src/modules/categories/categories.module';
 import { ChatModule } from 'src/modules/chat/chat.module';
+import { FollowModule } from 'src/modules/follow/follow.module';
+import { ChannelModule } from 'src/modules/channel/channel.module';
 
 @Module({
   imports: [PrismaModule, 
@@ -56,7 +58,9 @@ import { ChatModule } from 'src/modules/chat/chat.module';
     IngressModule,
     WebhookModule,
     CategoriesModule, 
-    ChatModule
+    ChatModule,
+    FollowModule,
+    ChannelModule
   ]
 })
 export class CoreModule {}
