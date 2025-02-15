@@ -3,10 +3,13 @@ import { PrismaService } from 'src/core/prisma/prisma.service';
 import { MailService } from '../libs/mail/mail.service';
 import { Cron } from '@nestjs/schedule';
 import { StorageService } from '../storage/storage.service';
+import { TelegramService } from '../libs/telegram/telegram.service';
 
 @Injectable()
 export class CronService {
-    public constructor(private readonly prismaService: PrismaService, private readonly mailService: MailService, private readonly storageService: StorageService) {
+    public constructor(private readonly prismaService: PrismaService, private readonly mailService: MailService, private readonly storageService: StorageService,
+        private readonly telegramService: TelegramService
+    ) {
 
     }
 
@@ -24,13 +27,27 @@ export class CronService {
                 deactivatedAt: {
                     lte: sevenDaysAgo
                 }
+            },
+            include: {
+                notificationSettings: true,
+                stream: true
             }
         })
 
         for(const user of deactivatedAccounts) {
             await this.mailService.sendAccountDeletion(user.email)
 
-            this.storageService.remove(user.avatar)
+            if(user.notificationSettings.telegramNotifications && user.telegramId) {
+                this.telegramService.sendAccountDeletion(user.telegramId)
+            }
+
+            if(user.avatar) {
+                this.storageService.remove(user.avatar)
+            }
+
+            if(user.stream.thumbnailUrl) {
+                this.storageService.remove(user.stream.thumbnailUrl)
+            }
         }
 
         await this.prismaService.user.deleteMany({

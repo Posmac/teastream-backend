@@ -50,8 +50,12 @@ export async function generateToken(
 			}
 		},
 		include: {
-			user: true
+			user: {
+				include: {
+					notificationSettings: true
+				}
 			}
+		}
 	})
 
 	return newToken
