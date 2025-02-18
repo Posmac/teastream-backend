@@ -152,29 +152,29 @@ export class NotificationService {
 		return notification
 	}
 
-	// public async createEnableTwoFactor(userId: string) {
-	// 	const notification = await this.prismaService.notification.create({
-	// 		data: {
-	// 			message: `<b className='font-medium'>Обеспечьте свою безопасность!</b>
-	// 			<p>Включите двухфакторную аутентификацию в настройках вашего аккаунта, чтобы повысить уровень защиты.</p>`,
-	// 			type: NotificationType.ENABLE_TWO_FACTOR,
-	// 			userId
-	// 		}
-	// 	})
+	public async createEnableTwoFactor(userId: string) {
+		const notification = await this.prismaService.notification.create({
+			data: {
+				message: `<b className='font-medium'>Обеспечьте свою безопасность!</b>
+				<p>Включите двухфакторную аутентификацию в настройках вашего аккаунта, чтобы повысить уровень защиты.</p>`,
+				type: NotificationType.ENABLE_TWO_FACTOR,
+				userId
+			}
+		})
 
-	// 	return notification
-	// }
+		return notification
+	}
 
-	// public async createVerifyChannel(userId: string) {
-	// 	const notification = await this.prismaService.notification.create({
-	// 		data: {
-	// 			message: `<b className='font-medium'>Поздравляем!</b>
-	// 		  <p>Ваш канал верифицирован, и теперь рядом с вашим каналом будет галочка.</p>`,
-	// 			type: NotificationType.VERIFIED_CHANNEL,
-	// 			userId
-	// 		}
-	// 	})
+	public async createVerifyChannel(userId: string) {
+		const notification = await this.prismaService.notification.create({
+			data: {
+				message: `<b className='font-medium'>Поздравляем!</b>
+			  <p>Ваш канал верифицирован, и теперь рядом с вашим каналом будет галочка.</p>`,
+				type: NotificationType.VERIFIED_CHANNEL,
+				userId
+			}
+		})
 
-	// 	return notification
-	// }
+		return notification
+	}
 }
