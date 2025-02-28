@@ -7,6 +7,7 @@ import { Stream } from "stream";
 import { FollowModel } from "src/modules/follow/models/follow.model";
 import { NotificationSettingsModel } from "src/modules/notification/models/notification-settings.model";
 import { NotificationModel } from "src/modules/notification/models/notificaiton.model";
+import { PlanModel } from "src/modules/sponsorship/plan/models/plan.model";
 
 @ObjectType({
     description: "User module"
@@ -67,7 +68,10 @@ export class UserModel implements User {
     public notifications: NotificationModel[]
 
     @Field(() => NotificationSettingsModel)
-    public notificationSettings: NotificationSettingsModel    
+    public notificationSettings: NotificationSettingsModel
+
+	@Field(() => [PlanModel])
+	public sponsorshipPlans: PlanModel[]
 
     @Field(() => StreamModel)
     public stream: StreamModel
